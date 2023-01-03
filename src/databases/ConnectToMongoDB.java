@@ -1,4 +1,4 @@
-package databases;
+package src.databases;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;

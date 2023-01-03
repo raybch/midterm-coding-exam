@@ -1,4 +1,4 @@
-package datastructure;
+package src.datastructure;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -17,6 +17,9 @@ public static void main(String[] args) {
         map.put(4, "Boston");
         map.put(5, "San Jose");
         map.put(6, "Seattle");
+
+        // checking collection view of the map
+        System.out.println("Collection view is: "+ map.values());
 
 
 

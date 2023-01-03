@@ -1,7 +1,8 @@
-package math.problems;
+package src.math.problems;
 
-import databases.ConnectToSqlDB;
+import src.databases.ConnectToSqlDB;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +29,14 @@ public class LowestNumber {
 		System.out.println("Data is reading from the Table (tbl_primenumber) and displaying to the console");
 		for(String st:lowestValue){
 			System.out.println(st);
+		}
+		PreparedStatement st = (PreparedStatement) con.prepareStatement("insert into temp values(?)");
+		i=0;
+		while(rs.next())
+		{
+			st.setString(1,anArray[i]);
+			st.executeUpdate();
+			i++;
 		}
 	}
 

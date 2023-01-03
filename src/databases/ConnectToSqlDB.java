@@ -1,4 +1,8 @@
-package databases;
+package src.databases;
+
+
+
+import src.design.Employees;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -22,6 +26,18 @@ public class ConnectToSqlDB {
         prop.load(ism);
         ism.close();
         return prop;
+    }
+
+    public static void closeStatement(Statement stmt) {
+        try {
+            if (null != stmt) {
+                stmt.close();
+                stmt = null;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        }
     }
 
     public static Connection connectToSqlDatabase() throws IOException, SQLException, ClassNotFoundException {
@@ -52,7 +68,7 @@ public class ConnectToSqlDB {
         return data;
     }
 
-    private void close() {
+    public void close() {
         try{
             if(resultSet != null){
                 resultSet.close();
@@ -181,6 +197,34 @@ public class ConnectToSqlDB {
         return list;
     }
 
+    public void insertEmployeeDatatoDatabase(String tableName, String columnName2, String columnName3, String columnName4, String columnName5, String columnName6, String columnName7, String columnName8, String columnName9, String columnName10, Employees employees)
+    {
+        try {
+            connectToSqlDatabase();
+            ps = connect.prepareStatement("INSERT INTO "+tableName+" ( " + columnName2 + "," + columnName3 + "," + columnName4 + "," + columnName5 + "," + columnName6 + "," + columnName7 + "," + columnName8 + "," + columnName9 + "," + columnName10 +  " ) VALUES(?,?,?,?,?,?,?,?,?)");
+
+            ps.setString(1,employees.getEmployeeName());
+            ps.setInt(2,employees.getEmployeeCnic());
+            ps.setString(3,employees.getEmployeeCountry());
+            ps.setString(4,employees.getEmployeeDepartment());
+            ps.setString(5,employees.getEmployeeTask());
+            ps.setInt(6,employees.getTotalPTO());
+            ps.setDouble(7,employees.getEmployeeSalary());
+            ps.setInt(8,employees.getEmployeeBonus());
+            ps.setInt(9,employees.getEmployeeBenefit());
+
+            ps.executeUpdate();
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws Exception {
 //        List<User> list = readUserProfileFromSqlTable();
 //        for(User user:list){
@@ -191,7 +235,6 @@ public class ConnectToSqlDB {
 //        for (String student: students){
 //            System.out.println(student);
 //        }
-
 
     }
 }
